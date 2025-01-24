@@ -1,1 +1,1 @@
-# Trademark-Recommendation-Service
+# Name-Recommendation-Service
