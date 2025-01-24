@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Name Recommendation</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.css') }}">
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+        <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        
+        <!-- Masthead-->
+    <header id="welcomePage" class="masthead">
+        <div class="container px-4 px-lg-5 h-100">
+            <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                <div class="col-lg-8 align-self-end">
+                    <h1 class="text-white font-weight-bold">Create a brandable name using Artificial Intelligence</h1>
+                    <hr class="divider" />
+                </div>
+                <div class="col-lg-8 align-self-baseline">
+                    <p class="text-white-75 mb-5">Start by clicking the button below and get 5 recommendations for creating a brandable, business name with a simple keyword!</p>
+                    <button class="btn btn-primary btn-xl" onclick="showForm()">Insert your Requirements</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+
+    <!-- Form Page -->
+    <div class="form-page" id="formPage" style="display: none;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <h1 class="display-4">Name Recommendation</h1>
+                    <form action="http://127.0.0.1:5000/result" method="POST">
+                        <div class="form-group">
+                            <label for="keyword">키워드:</label>
+                            <input type="text" class="form-control" name="keyword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="target">주 타겟층:</label>
+                            <input type="text" class="form-control" name="target">
+                        </div>
+                        <div class="form-group">
+                            <label for="goal">용도:</label>
+                            <input type="text" class="form-control" name="goal">
+                        </div>
+                        <!-- 다른 폼 요소도 동일한 방식으로 수정 -->
+                        <div class="form-group form-check">
+                          <label>소스:</label><br>
+                          <input type="checkbox" name="culture0" value="문화" data-target="culture">문화
+                          <input type="checkbox" name="celebrity0" value="인명" data-target="celebrity">인명
+                          <input type="checkbox" name="location0" value="지명" data-target="location">지명
+                          <input type="checkbox" name="food0" value="음식" data-target="food">음식
+                          <input type="checkbox" name="biological0" value="생물" data-target="biological">생물
+                          <input type="checkbox" name="item0" value="물건" data-target="item">물건
+                          <input type="checkbox" name="other0" value="기타" data-target="other">기타
+                          <input type="checkbox" name="none0" value="없음" data-target="none">없음<br><br>
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="culture">문화:</label>
+                            <input type="text" class="form-control" name="culture" id="culture" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="celebrity">인명:</label>
+                            <input type="text" class="form-control" name="celebrity" id="celebrity" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="location">지명:</label>
+                          <input type="text" class="form-control" name="location" id="location" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="food">음식:</label>
+                          <input type="text" class="form-control" name="food" id="food" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="biological">생물:</label>
+                          <input type="text" class="form-control" name="biological" id="biological" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="item">물건:</label>
+                          <input type="text" class="form-control" name="item" id="item" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="other">기타:</label>
+                          <input type="text" class="form-control" name="other" id="other" disabled>
+                        </div>
+                        <!-- 다른 입력란도 동일한 방식으로 수정 -->
+                        <div class="form-group">
+                            <label for="none">없음:</label>
+                            <input type="text" class="form-control" name="none" id="none" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>단어의 스타일:</label>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="style0" value="합성어/단일어" data-target="style">
+                                <label class="form-check-label" for="style0">합성어/단일어</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="style">합성어/단일어:</label>
+                            <input type="text" class="form-control" name="style" id="style" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="mood">분위기:</label>
+                            <input type="text" class="form-control" name="mood">
+                        </div>
+                        <button class="btn btn-primary" type="submit" onclick="if (validateForm()) showLoading();">이름 추천</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="loader" id="loadingPage" style="display: none;">
+                
+    </div>
+            
+    <div class="loadingText" id="loadingText" style="display: none;">
+        잠시만 기다려주세요. 결과 생성 중입니다...
+    </div>
+
+    <script>
+        function showForm() {
+            formPage.classList.add("animate-slide-in");
+            document.getElementById("welcomePage").style.display = "none";
+            document.getElementById("formPage").style.display = "block";
+        }
+        
+        function showLoading() {
+        document.getElementById("formPage").style.display = "none";
+        
+        document.getElementById("loadingPage").style.display = "block";
+        document.getElementById("loadingText").style.display = "block";
+        
+        }
+
+        function validateForm() {
+          var keywordInput = document.querySelector('input[name="keyword"]');
+          var keywordValue = keywordInput.value.trim(); 
+  
+          if (keywordValue === '') {
+              alert('키워드를 입력해야 합니다.'); 
+              setTimeout(function () {
+                window.scrollTo(0, 0);
+              }, 0);
+              keywordInput.focus();
+              return false; 
+          }
+  
+          return true; 
+        }
+    </script>
+    
+    <script>
+        const welcomePage = document.querySelector('.masthead');
+        welcomePage.style.display = 'block';
+        welcomePage.classList.add('fade-in');
+    </script>
+
+    <script>
+    // 모든 체크박스 요소 가져오기
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+    // 체크박스에 대한 이벤트 리스너 추가
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            const targetId = this.dataset.target;
+            const targetInput = document.getElementById(targetId);
+
+            if (this.checked) {
+                targetInput.disabled = false; // 체크박스가 체크되면 연결된 입력란을 활성화
+            } else {
+                targetInput.disabled = true;  // 체크박스가 해제되면 연결된 입력란을 비활성화
+            }
+        });
+    });
+  </script>
+  
+  <script>
+    // 모든 체크박스 요소 가져오기
+    const checkboxs = document.querySelectorAll('input[type="checkbox"][name="style0"]');
+
+    // 체크박스에 대한 이벤트 리스너 추가
+    checkboxs.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            const targetId = this.dataset.target;
+            const targetInput = document.getElementById(targetId);
+
+            if (this.checked) {
+                targetInput.disabled = false; // 체크박스가 체크되면 연결된 입력란을 활성화
+            } else {
+                targetInput.disabled = true;  // 체크박스가 해제되면 연결된 입력란을 비활성화
+            }
+        });
+    });
+  </script>
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

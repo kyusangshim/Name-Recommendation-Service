@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"> <!-- UTF-8 인코딩 설정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/result.css') }}">
+</head>
+<body>
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Meaning</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% if results %}
+                {% for i in range(results['names']|length) %}
+                    <tr>
+                        <td>{{ results['names'][i] }}</td>
+                        <td>{{ results['descriptions'][i] }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    
+    <form action="{{ url_for('student') }}" method="POST">
+        <div>
+            <button type="button" onclick="redirectToHome()">되돌아가기</button>
+        </div>
+    </form>
+
+    <script>
+        function redirectToHome() {
+            window.location.href = "{{ url_for('student') }}";
+        }
+    </script>
+</body>
+</html>
